@@ -28,7 +28,7 @@ var drac = 0;
 </script>
 </head>
 <body>
-<h1><a id="win">0</a>勝<a id="lose">0</a>負<a id="draw">0</a>分　分け抜き勝率:<a id="win_p">--</a>%</h1>
+<h1><a id="win">0</a>勝<a id="lose">0</a>負<a id="draw">0</a>分　分け抜き勝率:<a id="win_p">--.--</a>%</h1>
 <h1>AP<a id="AP">0</a>回,FC<a id="FC">0</a>回/<a id="count">0</a>試合</h1>
 <h1>AP率:<a id="AP_p">--</a>%,FC率<a id="FC_p">--</a>%</h1>
 <h2><a id="ws">0</a>連勝中</h2>
@@ -42,18 +42,18 @@ var drac = 0;
 function calc(){
 AP_p = AP_c / game;
 FC_p = FC_c / game;
-winp = Math.floor(100 * (winc * 100 / (game - drac)))/100;
-AP_p = Math.floor(100 * (AP_c * 100 /game)) / 100;
-FC_p = Math.floor(100 * (FC_c * 100 /game)) / 100;
-document.getElementById("win_p").textContent = winp;
+winp = Math.round(100 * (winc * 100 / (game - drac)))/100;
+AP_p = Math.round(100 * (AP_c * 100 /game)) / 100;
+FC_p = Math.round(100 * (FC_c * 100 /game)) / 100;
+document.getElementById("win_p").textContent = winp.toFixed(2);
 document.getElementById("AP").textContent = AP_c;
 document.getElementById("FC").textContent = FC_c;
 document.getElementById("count").textContent = game;
 document.getElementById("win").textContent = winc;
 document.getElementById("draw").textContent = drac;
 document.getElementById("lose").textContent = losc;
-document.getElementById("AP_p").textContent = AP_p;
-document.getElementById("FC_p").textContent = FC_p;
+document.getElementById("AP_p").textContent = AP_p.toFixed(2);
+document.getElementById("FC_p").textContent = FC_p.toFixed(2);
 document.getElementById("ws").textContent = ws_c;
 }
 function win(){game++;winc++;ws_c++;calc();}
