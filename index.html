@@ -30,46 +30,55 @@ var drac = 0;
 <body>
 <h1><a id="win">0</a>勝<a id="lose">0</a>負<a id="draw">0</a>分　分け抜き勝率:<a id="win_p">--.--</a>%</h1>
 <h1>AP<a id="AP">0</a>回,FC<a id="FC">0</a>回/<a id="count">0</a>試合</h1>
-<h1>AP率:<a id="AP_p">--</a>%,FC率<a id="FC_p">--</a>%</h1>
+<h1>AP率:<a id="AP_p">--.--</a>%,FC率<a id="FC_p">--.--</a>%</h1>
 <h2><a id="ws">0</a>連勝中</h2>
 <button class="a" onclick="APwin()">AP勝ち</button>　<button class="a" onclick="APdraw()">AP分け</button><br><br>
 <button class="a" onclick="FCwin()">FC勝ち</button>　<button class="a"onclick="FCdraw()">FC分け</button>　<button class="a" onclick="FClose()">FC負け</button><br><br>
 <button class="a"onclick="win()">勝利</button>　<button class="a"onclick="draw()">引き分け</button>　<button class="a"onclick="lose()">負け</button><br><br>
-<button onclick="delwin()">勝ち-</button>　<button onclick="deldraw()">分け-</button>　<button onclick="dellose()">負け-</button>　<button class="b" onclick="delAP()">AP-</button>　<button class="b" onclick="delFC()">FC-</button>　<button onclick="delgame()">試合-</button>　<button  onclick="delws()">連勝-</button>
-<br>※このシステムは仕様上戦積が引き分けのみor戦績に-のものがあればバグります
+<button id="delwin" onclick="delwin()" disabled>勝ち-</button>　<button id="deldraw" onclick="deldraw()" disabled>分け-</button>　<button id="dellose" onclick="dellose()" disabled>負け-</button>　<button id="delAP" class="b" onclick="delAP()" disabled>AP-</button>　<button id="delFC" class="b" onclick="delFC()" disabled>FC-</button>　<button id="delgame" onclick="delgame()" disabled>試合-</button>　<button id="delws" onclick="delws()" disabled>連勝-</button>
 </body>
 <script type="text/javascript">
 function calc(){
 AP_p = AP_c / game;
 FC_p = FC_c / game;
-winp = Math.round(100 * (winc * 100 / (game - drac)))/100;
+winp = Math.round(100 * (winc * 100 / (winc + losc)))/100;
 AP_p = Math.round(100 * (AP_c * 100 /game)) / 100;
 FC_p = Math.round(100 * (FC_c * 100 /game)) / 100;
-document.getElementById("win_p").textContent = winp.toFixed(2);
+if(winc == 0 && losc == 0){document.getElementById("win_p").textContent = '--.--';}else{document.getElementById("win_p").textContent = winp.toFixed(2)}
+if(game == 0){document.getElementById("AP_p").textContent = '--.--';}else{document.getElementById("AP_p").textContent = AP_p.toFixed(2)}
+if(game == 0){document.getElementById("FC_p").textContent = '--.--';}else{document.getElementById("FC_p").textContent = FC_p.toFixed(2)}
+document.getElementById("win").textContent = winc;
+document.getElementById("lose").textContent = losc;
+document.getElementById("draw").textContent = drac;
 document.getElementById("AP").textContent = AP_c;
 document.getElementById("FC").textContent = FC_c;
 document.getElementById("count").textContent = game;
-document.getElementById("win").textContent = winc;
-document.getElementById("draw").textContent = drac;
-document.getElementById("lose").textContent = losc;
-document.getElementById("AP_p").textContent = AP_p.toFixed(2);
-document.getElementById("FC_p").textContent = FC_p.toFixed(2);
 document.getElementById("ws").textContent = ws_c;
+disabled();
 }
-function win(){game++;winc++;ws_c++;calc();}
-function FCwin(){FC_c++;win();}
-function APwin(){AP_c++;win();}
-function draw(){game++;drac++;ws_c = 0;calc();}
-function FCdraw(){FC_c++;draw();}
-function APdraw(){AP_c++;draw();}
-function lose(){game++;losc++;ws_c = 0;calc();}
-function FClose(){FC_c++;lose();}
-function delwin(){winc--;calc();}
-function deldraw(){drac--;calc();}
-function dellose(){losc--;calc();}
-function delAP(){AP_c--;calc();}
-function delFC(){FC_c--;calc();}
-function delgame(){game--;calc();}
-function delws(){ws_c--;calc();}
+function disabled(){
+if(winc <= 0){document.getElementById('delwin').setAttribute("disabled","true")}else{document.getElementById('delwin').removeAttribute("disabled")}
+if(drac <= 0){document.getElementById('deldraw').setAttribute("disabled","true")}else{document.getElementById('deldraw').removeAttribute("disabled")}
+if(losc <= 0){document.getElementById('dellose').setAttribute("disabled","true")}else{document.getElementById('dellose').removeAttribute("disabled")}
+if(AP_c <= 0){document.getElementById('delAP').setAttribute("disabled","true")}else{document.getElementById('delAP').removeAttribute("disabled")}
+if(FC_c <= 0){document.getElementById('delFC').setAttribute("disabled","true")}else{document.getElementById('delFC').removeAttribute("disabled")}
+if(game <= 0){document.getElementById('delgame').setAttribute("disabled","true")}else{document.getElementById('delgame').removeAttribute("disabled")}
+if(ws_c <= 0){document.getElementById('delws').setAttribute("disabled","true")}else{document.getElementById('delws').removeAttribute("disabled")}
+}
+function win(){game++;winc++;ws_c++;calc()}
+function FCwin(){FC_c++;win()}
+function APwin(){AP_c++;win()}
+function draw(){game++;drac++;ws_c = 0;calc()}
+function FCdraw(){FC_c++;draw()}
+function APdraw(){AP_c++;draw()}
+function lose(){game++;losc++;ws_c = 0;calc()}
+function FClose(){FC_c++;lose()}
+function delwin(){winc--;calc()}
+function deldraw(){drac--;calc()}
+function dellose(){losc--;calc()}
+function delAP(){AP_c--;calc()}
+function delFC(){FC_c--;calc()}
+function delgame(){game--;calc()}
+function delws(){ws_c--;calc()}
 </script>
 </html>
