@@ -34,6 +34,7 @@ var drac = 0;
 <button class="a"onclick="win()">勝利</button>　<button class="a"onclick="draw()">引き分け</button>　<button class="a"onclick="lose()">負け</button><br><br>
 <button id="delwin" onclick="delwin()" class="c" disabled>勝ち-</button><button id="deldraw" onclick="deldraw()" class="c" disabled>分け-</button><button id="dellose" onclick="dellose()" class="c" disabled>負け-</button><button id="delAP" class="b c" onclick="delAP()" disabled>AP-</button><button id="delFC" class="b c" onclick="delFC()" disabled>FC-</button><button id="delgame" onclick="delgame()" class="c" disabled>試合-</button><button id="delws" onclick="delws()" class="c" disabled>連勝-</button>
 <br><button id="addwin" onclick="addwin()" class="d">勝ち+</button><button id="adddraw" onclick="adddraw()" class="d">分け+</button><button id="addlose" onclick="addlose()" class="d">負け+</button><button id="addAP" class="e d" onclick="addAP()">AP+</button><button id="addFC" class="e d" onclick="addFC()">FC+</button><button id="addgame" onclick="addgame()" class="d">試合+</button><button id="addws" onclick="addws()" class="d">連勝+</button>
+<br><br><button id="reset" onclick="reset()" class="f">リセット</button>
 <p class="inv">このシステムは三田浩介(twitterID:@mitakousuke)さんの10時間ランクマッチで自作されていたシステムを参考にさせていただきました。</p>
 </body>
 <script type="text/javascript">
@@ -88,5 +89,6 @@ function addAP(){AP_c++;calc()}
 function addFC(){FC_c++;calc()}
 function addgame(){game++;calc()}
 function addws(){ws_c++;calc()}
+function reset(){if(confirm("本当にリセットしますか？\nこの操作は取り消せません。")){game = 0;AP_c = 0;FC_c = 0;ws_c = 0;winp = 0;AP_p = 0;FC_p = 0;winc = 0;losc = 0;drac = 0;alert("戦績がリセットされました");calc()}else{alert("操作がキャンセルされました")}}
 </script>
 </html>
