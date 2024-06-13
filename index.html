@@ -2,14 +2,17 @@
 <head>
 <title>勝率計算ツール</title>
 <style>
-button.a {font-size: 20px;margin: 4px 2px;txt-align: center;}
-button.b {font-size: 17px;}
-button.c {padding: 5px;margin-right: 10px;}
-button.d {padding: 5px;margin-top: 7px;margin-right: 7px;}
-button.e {font-size: 16px;}
-button:disabled {border-color: rgba(0 0 0 / 100%);}
-.haikei {background-color: rgba(0 0 0 / 20%);}
-.inv {display: none;}
+button {border-color: rgba(0 0 0 / 50%);border-radius:3px}
+button.a {font-size: 20px;margin: 4px 15px 20px 2px;text-align: center}
+button.b {font-size: 17px}
+button.c {padding: 5px;margin-right: 10px}
+button.d {padding: 5px;margin-top: 7px;margin-right: 7px}
+button.e {font-size: 16px}
+button.f {font-size: 20px;margin: 4px 15px 0px 2px;text-align: center}
+button.g {border-color: rgba(255 0 0 / 100%);border-width: 5px}
+button:disabled {border-color: rgba(0 0 0 / 100%)}
+.haikei {background-color: rgba(0 0 0 / 20%)}
+.inv {display: none}
 </style>
 <script type="text/javascript">
 var game = 0;
@@ -29,24 +32,24 @@ var drac = 0;
 <h1>AP<a id="AP">0</a>回,FC<a id="FC">0</a>回/<a id="count">0</a>試合</h1>
 <h1>AP率:<a id="AP_p">--.--</a>%,FC率<a id="FC_p">--.--</a>%</h1>
 <h2><a id="ws">0</a>連勝中</h2>
-<button class="a" onclick="APwin()">AP勝ち</button>　<button class="a" onclick="APdraw()">AP分け</button><br><br>
-<button class="a" onclick="FCwin()">FC勝ち</button>　<button class="a"onclick="FCdraw()">FC分け</button>　<button class="a" onclick="FClose()">FC負け</button><br><br>
-<button class="a"onclick="win()">勝利</button>　<button class="a"onclick="draw()">引き分け</button>　<button class="a"onclick="lose()">負け</button><br><br>
+<button class="a" onclick="APwin()">AP勝ち</button><button class="a" onclick="APdraw()">AP分け</button><br>
+<button class="a" onclick="FCwin()">FC勝ち</button><button class="a"onclick="FCdraw()">FC分け</button><button class="a" onclick="FClose()">FC負け</button><br>
+<button class="f"onclick="win()">勝利</button><button class="f"onclick="draw()">引き分け</button><button class="f"onclick="lose()">負け</button><br><br>
 <button id="delwin" onclick="delwin()" class="c" disabled>勝ち-</button><button id="deldraw" onclick="deldraw()" class="c" disabled>分け-</button><button id="dellose" onclick="dellose()" class="c" disabled>負け-</button><button id="delAP" class="b c" onclick="delAP()" disabled>AP-</button><button id="delFC" class="b c" onclick="delFC()" disabled>FC-</button><button id="delgame" onclick="delgame()" class="c" disabled>試合-</button><button id="delws" onclick="delws()" class="c" disabled>連勝-</button>
 <br><button id="addwin" onclick="addwin()" class="d">勝ち+</button><button id="adddraw" onclick="adddraw()" class="d">分け+</button><button id="addlose" onclick="addlose()" class="d">負け+</button><button id="addAP" class="e d" onclick="addAP()">AP+</button><button id="addFC" class="e d" onclick="addFC()">FC+</button><button id="addgame" onclick="addgame()" class="d">試合+</button><button id="addws" onclick="addws()" class="d">連勝+</button>
-<br><br><button id="reset" onclick="reset()" class="f">リセット</button>
+<br><br><button id="reset" onclick="reset()" class="f g">リセット</button>
 <p class="inv">このシステムは三田浩介(twitterID:@mitakousuke)さんの10時間ランクマッチで自作されていたシステムを参考にさせていただきました。</p>
 </body>
 <script type="text/javascript">
 function calc(){
 AP_p = AP_c / game;
 FC_p = FC_c / game;
-winp = Math.round(100 * (winc * 100 / (winc + losc)))/100;
-AP_p = Math.round(100 * (AP_c * 100 /game)) / 100;
-FC_p = Math.round(100 * (FC_c * 100 /game)) / 100;
-if(winc == 0 && losc == 0){document.getElementById("win_p").textContent = '--.--';}else{document.getElementById("win_p").textContent = winp.toFixed(2)}
-if(game == 0 || AP_p > 100){document.getElementById("AP_p").textContent = '--.--';}else{document.getElementById("AP_p").textContent = AP_p.toFixed(2)}
-if(game == 0 || FC_p > 100){document.getElementById("FC_p").textContent = '--.--';}else{document.getElementById("FC_p").textContent = FC_p.toFixed(2)}
+winp = Math.round(100*(winc*100/(winc+losc)))/100;
+AP_p = Math.round(100*(AP_c*100/game))/100;
+FC_p = Math.round(100*(FC_c*100/game))/100;
+if(winc == 0 && losc == 0){document.getElementById("win_p").textContent = '--.--'}else{document.getElementById("win_p").textContent = winp.toFixed(2)}
+if(game == 0 || AP_p > 100){document.getElementById("AP_p").textContent = '--.--'}else{document.getElementById("AP_p").textContent = AP_p.toFixed(2)}
+if(game == 0 || FC_p > 100){document.getElementById("FC_p").textContent = '--.--'}else{document.getElementById("FC_p").textContent = FC_p.toFixed(2)}
 document.getElementById("win").textContent = winc;
 document.getElementById("lose").textContent = losc;
 document.getElementById("draw").textContent = drac;
