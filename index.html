@@ -37,7 +37,7 @@ var drac = 0;
 <button class="a" onclick="FCwin()">FC勝ち</button><button class="a"onclick="FCdraw()">FC分け</button><button class="a" onclick="FClose()">FC負け</button><br>
 <button class="f"onclick="win()">勝利</button><button class="f"onclick="draw()">引き分け</button><button class="f"onclick="lose()">負け</button><br><br>
 <button id="delwin" onclick="delwin()" class="c" disabled>勝ち-</button><button id="deldraw" onclick="deldraw()" class="c" disabled>分け-</button><button id="dellose" onclick="dellose()" class="c" disabled>負け-</button><button id="delAP" class="b c" onclick="delAP()" disabled>AP-</button><button id="delFC" class="b c" onclick="delFC()" disabled>FC-</button><button id="delgame" onclick="delgame()" class="c" disabled>試合-</button><button id="delws" onclick="delws()" class="c" disabled>連勝-</button>
-<br><button id="addwin" onclick="addwin()" class="d">勝ち+</button><button id="adddraw" onclick="adddraw()" class="d">分け+</button><button id="addlose" onclick="addlose()" class="d">負け+</button><button id="addAP" class="e d" onclick="addAP()">AP+</button><button id="addFC" class="e d" onclick="addFC()">FC+</button><button id="addgame" onclick="addgame()" class="d">試合+</button><button id="addws" onclick="addws()" class="d">連勝+</button>
+<br><button id="addwin" onclick="addwin()" class="d">勝ち+</button><button id="adddraw" onclick="adddraw()" class="d">分け+</button><button id="addlose" onclick="addlose()" class="d">負け+</button><button id="addAP" class="e d" onclick="addAP()">AP+</button><button id="addFC" class="e d" onclick="addFC()">FC+</button><button id="addgame" onclick="addgame()" class="d">試合+</button><button id="addws" onclick="addws()" class="d" disabled>連勝+</button>
 <br><br><button id="reset" onclick="reset()" class="f g">リセット</button>
 <p class="inv">このシステムは三田浩介(twitterID:@mitakousuke)さんの10時間ランクマッチで自作されていたシステムを参考にさせていただきました。</p>
 </body>
@@ -70,6 +70,7 @@ if(game <= 0){document.getElementById('delgame').setAttribute("disabled","true")
 if(ws_c <= 0){document.getElementById('delws').setAttribute("disabled","true")}else{document.getElementById('delws').removeAttribute("disabled")}
 if(AP_p >= 100){document.getElementById('addAP').setAttribute("disabled","true")}else{document.getElementById('addAP').removeAttribute("disabled")}
 if(FC_p >= 100){document.getElementById('addFC').setAttribute("disabled","true")}else{document.getElementById('addFC').removeAttribute("disabled")}
+if(ws_c >= game || game == 0){document.getElementById('addws').setAttribute("disabled","true")}else{document.getElementById('addws').removeAttribute("disabled")}
 }
 function win(){game++;winc++;ws_c++;calc()}
 function FCwin(){FC_c++;win()}
