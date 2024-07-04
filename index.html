@@ -85,7 +85,7 @@ function addAP(){AP_c++;befo=-1;calc()}
 function addFC(){FC_c++;befo=-1;calc()}
 function addgame(){game++;befo=-1;calc()}
 function addws(){ws_c++;befo=-1;calc()}
-function reset(){if(confirm("本当にリセットしますか？\nこの操作は取り消せません。")){game=0;AP_c=0;FC_c=0;ws_c=0;winp=0;AP_p=0;FC_p=0;winc=0;losc=0;drac=0;alert("戦績がリセットされました");calc()}else{alert("操作がキャンセルされました")}}
+function reset(){if(confirm("本当にリセットしますか？\nこの操作は取り消せません。")){game=0;AP_c=0;FC_c=0;ws_c=0;winp=0;AP_p=0;FC_p=0;winc=0;losc=0;drac=0;befo=-1;alert("戦績がリセットされました");calc()}else{alert("操作がキャンセルされました")}}
 function s_reset(){if(befo == -1){alert("前回の結果は存在しないか置き換えられているため、復元できません")}else if(befo == -2){alert("戻せるのは1回までです")}else if(befo == 10){game--;winc--;ws_c--}else if(befo == 11){game--;winc--;ws_c--;FC_c--}else if(befo == 12){game--;winc--;ws_c--;AP_c--}else if(befo == 20){game--;drac--;ws_c=ws_b}else if(befo == 21){game--;drac--;ws_c=ws_b;FC_c--}else if(befo == 22){game--;drac--;ws_c=ws_b;AP_c--}else if(befo == 30){game--;losc--;ws_c=ws_b}else if(befo == 31){game--;losc--;ws_c=ws_b;FC_c--}calc();befo=-2}
 </script>
 </html>
