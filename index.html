@@ -16,7 +16,7 @@ a.a {letter-spacing: 32px}
 .inv {display: none}
 </style>
 <script type="text/javascript">
-var game = 0;var AP_c = 0;var FC_c = 0;var ws_c = 0;var winp = 0;var AP_p = 0;var FC_p = 0;var winc = 0;var losc = 0;var drac = 0;var befo = -1;var ws_b = 0;
+var game = 0;var AP_c = 0;var FC_c = 0;var ws_c = 0;var winp = 0;var AP_p = 0;var FC_p = 0;var winc = 0;var losc = 0;var drac = 0;var before = [];
 </script>
 </head>
 <body>
@@ -30,6 +30,7 @@ var game = 0;var AP_c = 0;var FC_c = 0;var ws_c = 0;var winp = 0;var AP_p = 0;va
 <button id="delwin" onclick="delwin()" class="c" disabled>勝ち-</button><button id="deldraw" onclick="deldraw()" class="c" disabled>分け-</button><button id="dellose" onclick="dellose()" class="c" disabled>負け-</button><button id="delAP" class="b c" onclick="delAP()" disabled>AP-</button><button id="delFC" class="b c" onclick="delFC()" disabled>FC-</button><button id="delgame" onclick="delgame()" class="c" disabled>試合-</button><button id="delws" onclick="delws()" class="c" disabled>連勝-</button>
 <br><button id="addwin" onclick="addwin()" class="d">勝ち+</button><button id="adddraw" onclick="adddraw()" class="d">分け+</button><button id="addlose" onclick="addlose()" class="d">負け+</button><button id="addAP" class="e d" onclick="addAP()">AP+</button><button id="addFC" class="e d" onclick="addFC()">FC+</button><button id="addgame" onclick="addgame()" class="d">試合+</button><button id="addws" onclick="addws()" class="d" disabled>連勝+</button>
 <br><br><button id="reset" onclick="reset()" class="f g">リセット</button><button id="S_reset" onclick="s_reset()" class="f g">今のなし</button>
+<br><br><button id="save" onclick="save()" class="f g">書き出し</button><br>※書き出し機能は実験的なのでバグがある可能性があります
 <p class="inv">このシステムは三田浩介(twitterID:@mitakousuke)さんの10時間ランクマッチで自作されていたシステムを参考にさせていただきました。</p>
 </body>
 <script type="text/javascript">
@@ -63,29 +64,31 @@ if(AP_p >= 100){document.getElementById('addAP').setAttribute("disabled","true")
 if(FC_p >= 100){document.getElementById('addFC').setAttribute("disabled","true")}else{document.getElementById('addFC').removeAttribute("disabled")}
 if(ws_c >= game || game == 0){document.getElementById('addws').setAttribute("disabled","true")}else{document.getElementById('addws').removeAttribute("disabled")}
 }
-function win(){game++;winc++;ws_c++;befo=10;calc()}
-function FCwin(){FC_c++;game++;winc++;ws_c++;befo=11;calc()}
-function APwin(){AP_c++;game++;winc++;ws_c++;befo=12;calc()}
-function draw(){game++;drac++;ws_c=0;befo=20;calc()}
-function FCdraw(){FC_c++;game++;drac++;ws_b=ws_c;ws_c=0;befo=21;calc()}
-function APdraw(){AP_c++;game++;drac++;ws_b=ws_c;ws_c=0;befo=22;calc()}
-function lose(){game++;losc++;ws_b=ws_c;ws_c=0;befo=30;calc()}
-function FClose(){FC_c++;game++;losc++;ws_b=ws_c;ws_c=0;befo=31;calc()}
-function delwin(){winc--;befo=-1;calc()}
-function deldraw(){drac--;befo=-1;calc()}
-function dellose(){losc--;befo=-1;calc()}
-function delAP(){AP_c--;befo=-1;calc()}
-function delFC(){FC_c--;befo=-1;calc()}
-function delgame(){game--;befo=-1;calc()}
-function delws(){ws_c--;befo=-1;calc()}
-function addwin(){winc++;befo=-1;calc()}
-function adddraw(){drac++;befo=-1;calc()}
-function addlose(){losc++;befo=-1;calc()}
-function addAP(){AP_c++;befo=-1;calc()}
-function addFC(){FC_c++;befo=-1;calc()}
-function addgame(){game++;befo=-1;calc()}
-function addws(){ws_c++;befo=-1;calc()}
-function reset(){if(confirm("本当にリセットしますか？\nこの操作は取り消せません。")){game=0;AP_c=0;FC_c=0;ws_c=0;winp=0;AP_p=0;FC_p=0;winc=0;losc=0;drac=0;befo=-1;alert("戦績がリセットされました");calc()}else{alert("操作がキャンセルされました")}}
-function s_reset(){if(befo == -1){alert("前回の結果は存在しないか置き換えられているため、復元できません")}else if(befo == -2){alert("戻せるのは1回までです")}else if(befo == 10){game--;winc--;ws_c--}else if(befo == 11){game--;winc--;ws_c--;FC_c--}else if(befo == 12){game--;winc--;ws_c--;AP_c--}else if(befo == 20){game--;drac--;ws_c=ws_b}else if(befo == 21){game--;drac--;ws_c=ws_b;FC_c--}else if(befo == 22){game--;drac--;ws_c=ws_b;AP_c--}else if(befo == 30){game--;losc--;ws_c=ws_b}else if(befo == 31){game--;losc--;ws_c=ws_b;FC_c--}calc();befo=-2}
+function win(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);game++;winc++;ws_c++;calc()}
+function FCwin(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);FC_c++;game++;winc++;ws_c++;calc()}
+function APwin(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);AP_c++;game++;winc++;ws_c++;calc()}
+function draw(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);game++;drac++;ws_c=0;calc()}
+function FCdraw(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);FC_c++;game++;drac++;ws_c=0;calc()}
+function APdraw(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);AP_c++;game++;drac++;ws_c=0;calc()}
+function lose(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);game++;losc++;ws_c=0;calc()}
+function FClose(){before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);FC_c++;game++;losc++;ws_c=0;calc()}
+function delwin(){winc--;calc()}
+function deldraw(){drac--;calc()}
+function dellose(){losc--;calc()}
+function delAP(){AP_c--;calc()}
+function delFC(){FC_c--;calc()}
+function delgame(){game--;calc()}
+function delws(){ws_c--;calc()}
+function addwin(){winc++;calc()}
+function adddraw(){drac++;calc()}
+function addlose(){losc++;calc()}
+function addAP(){AP_c++;calc()}
+function addFC(){FC_c++;calc()}
+function addgame(){game++;calc()}
+function addws(){ws_c++;calc()}
+function reset(){if(confirm("本当にリセットしますか？\nこの操作は取り消せません。")){game=0;AP_c=0;FC_c=0;ws_c=0;winp=0;AP_p=0;FC_p=0;winc=0;losc=0;drac=0;alert("戦績がリセットされました");calc()}else{alert("操作がキャンセルされました")}}
+function s_reset(i=0){if(before.length == 0){alert("前回の結果が存在しません")}else{var befo = before[before.length - 1];if(i==0){before.pop()};game = befo[0];winc = befo[1];drac = befo[2];losc = befo[3];ws_c = befo[4];AP_c = befo[5];FC_c = befo[6];befo = [];calc()}}
+function save(){if(before.length == 0){alert("読み出す対象が存在しません")}else{before.push([game,winc,drac,losc,ws_c,AP_c,FC_c]);var befo = before[before.length - 1];console.log("//読み込みの時に使いますので破損しないようにしてください\nload([",befo[0],",",befo[1],",",befo[2],",",befo[3],",",befo[4],",",befo[5],",",befo[6],"],1)")}}
+function load([a,b,c,d,e,f,g],i){before.push([a,b,c,d,e,f,g]);s_reset()};
 </script>
 </html>
